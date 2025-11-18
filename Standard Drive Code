@@ -10,30 +10,22 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class MecanumTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        // Declare our motors
-        // Make sure your ID's match your configuration
-        /* "launcherBeltMotor" currently does not exist. 
-        Please update this comment when part is added */
         
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
-        //DcMotor launcherBeltMotor = hardwareMap.dcMotor.get("launcherBeltMotor");
 
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        // launcherBeltMotor direction is unknown, update when known
-        //launcherBeltMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         
 
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //launcherBeltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
        
 
         waitForStart();
@@ -57,9 +49,6 @@ public class MecanumTeleOp extends LinearOpMode {
             
             double powerMultiplier = 1;
             
-            /* if (triggerPress != 0) {
-                laucherBeltMotor.setPower(triggerPress);
-            } */
             
             if(rightX > 0)
             {
@@ -95,3 +84,4 @@ public class MecanumTeleOp extends LinearOpMode {
         }
     }
 }
+    
