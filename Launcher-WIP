@@ -60,12 +60,25 @@ public class MecanumTeleOp extends LinearOpMode {
             double triggerPress = gamepad1.right_trigger;
             boolean isRightBumperPressed = gamepad1.right_bumper;
             
-            leftLauncher.setPower(triggerPress * -1);
-            rightLauncher.setPower(triggerPress);
+            double launcherSpeed = 0.30 + triggerPress/3.33333;
+            boolean launcherRBP = isRightBumperPressed;
+            double findLauncherSpd;
             
-            if (isRightBumperPressed == true) {
-                leftLauncher.setPower(-0.36);
-                rightLauncher.setPower(0.36);
+           if (triggerPress != 0) {
+               launcherRBP = true;
+           } else {
+               launcherRBP = isRightBumperPressed;
+           }
+            
+            if (launcherRBP == true) {
+                leftLauncher.setPower(launcherSpeed * -1);
+                rightLauncher.setPower(launcherSpeed);
+                findLauncherSpd = launcherSpeed;
+                
+            } else {
+                leftLauncher.setPower(0);
+                rightLauncher.setPower(0);
+                findLauncherSpd = 0;
             }
 
             
@@ -104,8 +117,9 @@ public class MecanumTeleOp extends LinearOpMode {
             telemetry.addData("Front_Right tgt pwr", "pwr: " + String.format("%.2f", v2));
             telemetry.addData("Back_Left tgt pwr", "pwr: " + String.format("%.2f", v3));
             telemetry.addData("Back_Right tgt pwr", "pwr: " + String.format("%.2f", v4));
-            telemetry.addData("RightTrigger power",  String.format("%.2f", triggerPress));
+            telemetry.addData("RightTrigger power",  String.format("%.2f", launcherSpeed * 100));
             telemetry.addData("RightBumper pressed",isRightBumperPressed);
+            telemetry.addData("Launcher Speed", findLauncherSpd * 100);
             telemetry.update();
         }
     }
