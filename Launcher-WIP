@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class MecanumTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        // Declare our motors
+         // Declare our motors
         // Make sure your ID's match your configuration
         /* "launcherBeltMotor" currently does not exist. 
         Please update this comment when part is added */
@@ -19,15 +19,15 @@ public class MecanumTeleOp extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
-        DcMotor rightLauncher = hardwareMap.dcMotor.get("rightLauncher");
         DcMotor leftLauncher = hardwareMap.dcMotor.get("leftLauncher");
-        //DcMotor launcherBeltMotor = hardwareMap.dcMotor.get("launcherBeltMotor");
+        DcMotor rightLauncher = hardwareMap.dcMotor.get("rightLauncher");
+         //DcMotor launcherBeltMotor = hardwareMap.dcMotor.get("launcherBeltMotor");
 
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        // launcherBeltMotor direction is unknown, update when known
+         // launcherBeltMotor direction is unknown, update when known
         //launcherBeltMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         
 
@@ -35,7 +35,8 @@ public class MecanumTeleOp extends LinearOpMode {
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //launcherBeltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+         //launcherBeltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       
        
 
         waitForStart();
@@ -66,13 +67,14 @@ public class MecanumTeleOp extends LinearOpMode {
                 leftLauncher.setPower(-0.36);
                 rightLauncher.setPower(0.36);
             }
-          
+
             
             double powerMultiplier = 1;
             
-            /* if (triggerPress != 0) {
+             /* if (triggerPress != 0) {
                 laucherBeltMotor.setPower(triggerPress);
             } */
+            
             
             if(rightX > 0)
             {
