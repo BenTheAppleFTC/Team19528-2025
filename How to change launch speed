@@ -1,0 +1,16 @@
+How to change launch scale:
+
+The code looks like this:  double launcherSpeed = 0.30 + triggerPress/3.33333;
+this makes the Right Trigger go between 30% power and 60% power
+to change it think about it like this:
+= (amount you want it to start from) + triggerPress/(amount you need to divide by to get the number that adds with your amount you want it o start from)
+
+For example: i want it to start at 30% power (0.30) and i want it to go to only 50% power
+think about it like this: what is the differece between 30% and 50%? its 20%.
+to find what to divide it by, think about what to divide 100 by to get the desired difference: 20
+100 divided by 5 is 20 so you divide by 5
+write it like this:  double launcherSpeed = 0.30 + triggerPress/5;
+
+another example: start at 10% and go to 80%:
+
+ double launcherSpeed = 0.10 + triggerPress/1.4286;
