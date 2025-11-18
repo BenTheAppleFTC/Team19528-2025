@@ -1,4 +1,4 @@
-#How to change launch scale:
+How to change launch scale:
 
 The code looks like this:  double launcherSpeed = 0.30 + triggerPress/3.33333;
 this makes the Right Trigger go between 30% power and 60% power
