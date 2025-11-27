@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -21,6 +22,8 @@ public class MecanumTeleOp extends LinearOpMode {
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
         DcMotor leftLauncher = hardwareMap.dcMotor.get("leftLauncher");
         DcMotor rightLauncher = hardwareMap.dcMotor.get("rightLauncher");
+        CRServo topCRServo = hardwareMap.get(CRServo.class, "topCRServo");
+        CRServo bottomCRServo = hardwareMap.get(CRServo.class, "bottomCRServo");
          //DcMotor launcherBeltMotor = hardwareMap.dcMotor.get("launcherBeltMotor");
 
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -37,10 +40,10 @@ public class MecanumTeleOp extends LinearOpMode {
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
          //launcherBeltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
        
+       String whatServo = "both";
        
 
         waitForStart();
-
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
@@ -55,10 +58,41 @@ public class MecanumTeleOp extends LinearOpMode {
             double v3 = r * Math.sin(robotAngle) + rightX;
             double v4 = r * Math.cos(robotAngle) - rightX;
             
-            //the leftLauncher needs to be negitave to go forward.
+            //a is bottom, x is top Left Bumper is both
+            //leftTrigger controls power for servo(s)
+        
+            double leftTrigger = gamepad2.left_trigger;
+            double servoPowerDisplay = leftTrigger * 100;
+            boolean leftBumper = gamepad2.left_bumper;
             
-            double triggerPress = gamepad1.right_trigger;
-            boolean isRightBumperPressed = gamepad1.right_bumper;
+            if(gamepad2.x){
+                whatServo = "top";
+            } else if(gamepad2.a){
+                whatServo = "bottom";
+            } else if(leftBumper){
+                whatServo = "both";
+            } 
+            
+            if (leftTrigger != 0) {
+                if(whatServo == "top"){
+                    topCRServo.setPower(leftTrigger);
+                } else if(whatServo == "bottom"){
+                    bottomCRServo.setPower(leftTrigger);
+                } else if(whatServo == "both"){
+                    topCRServo.setPower(leftTrigger);
+                    bottomCRServo.setPower(leftTrigger);
+                }
+            } else {
+                topCRServo.setPower(0);
+                bottomCRServo.setPower(0);
+            }
+            
+            
+            
+            //the rightLauncher needs to be negitave to go forward.
+            
+            double triggerPress = gamepad2.right_trigger;
+            boolean isRightBumperPressed = gamepad2.right_bumper;
             
             double launcherSpeed = 0.30 + triggerPress/3.33333;
             boolean launcherRBP = isRightBumperPressed;
@@ -71,8 +105,8 @@ public class MecanumTeleOp extends LinearOpMode {
            }
             
             if (launcherRBP == true) {
-                leftLauncher.setPower(launcherSpeed * -1);
-                rightLauncher.setPower(launcherSpeed);
+                leftLauncher.setPower(launcherSpeed);
+                rightLauncher.setPower(launcherSpeed * -1);
                 findLauncherSpd = launcherSpeed;
                 
             } else {
@@ -120,6 +154,8 @@ public class MecanumTeleOp extends LinearOpMode {
             telemetry.addData("RightTrigger power",  String.format("%.2f", launcherSpeed * 100));
             telemetry.addData("RightBumper pressed",isRightBumperPressed);
             telemetry.addData("Launcher Speed", findLauncherSpd * 100);
+            telemetry.addData("What Servo = ",whatServo);
+            telemetry.addData("Servo pwr: ",servoPowerDisplay);
             telemetry.update();
         }
     }
