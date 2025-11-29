@@ -60,6 +60,7 @@ public class MecanumTeleOp extends LinearOpMode {
             //leftTrigger controls power for servo(s)
         
             double leftTrigger = gamepad2.left_trigger;
+            double leftTriggerLeft = leftTrigger * -1;
             double servoPowerDisplay = leftTrigger * 100;
             boolean leftBumper = gamepad2.left_bumper;
             
@@ -73,14 +74,14 @@ public class MecanumTeleOp extends LinearOpMode {
             
             if (leftTrigger != 0) {
                 if(whatServo == "top"){
-                    topLeftCRServo.setPower(leftTrigger);
+                    topLeftCRServo.setPower(leftTriggerLeft);
                     topRightCRServo.setPower(leftTrigger);
                 } else if(whatServo == "bottom"){
-                    bottomLeftCRServo.setPower(leftTrigger);
+                    bottomLeftCRServo.setPower(leftTriggerLeft);
                     bottomRightCRServo.setPower(leftTrigger);
                 } else if(whatServo == "both"){
-                    topLeftCRServo.setPower(leftTrigger);
-                    bottomLeftCRServo.setPower(leftTrigger);
+                    topLeftCRServo.setPower(leftTriggerLeft);
+                    bottomLeftCRServo.setPower(leftTriggerLeft);
                     topRightCRServo.setPower(leftTrigger);
                     bottomRightCRServo.setPower(leftTrigger);
                 }
