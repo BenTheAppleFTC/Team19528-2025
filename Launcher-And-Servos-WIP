@@ -13,8 +13,6 @@ public class MecanumTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
          // Declare our motors
         // Make sure your ID's match your configuration
-        /* "launcherBeltMotor" currently does not exist. 
-        Please update this comment when part is added */
         
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
@@ -22,23 +20,23 @@ public class MecanumTeleOp extends LinearOpMode {
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
         DcMotor leftLauncher = hardwareMap.dcMotor.get("leftLauncher");
         DcMotor rightLauncher = hardwareMap.dcMotor.get("rightLauncher");
-        CRServo topCRServo = hardwareMap.get(CRServo.class, "topCRServo");
-        CRServo bottomCRServo = hardwareMap.get(CRServo.class, "bottomCRServo");
-         //DcMotor launcherBeltMotor = hardwareMap.dcMotor.get("launcherBeltMotor");
+        CRServo topLeftCRServo = hardwareMap.get(CRServo.class, "topLeftCRServo");
+        CRServo bottomLeftCRServo = hardwareMap.get(CRServo.class, "bottomLeftCRServo");
+        CRServo topRightCRServo = hardwareMap.get(CRServo.class, "topRightCRServo");
+        CRServo bottomRightCRServo = hardwareMap.get(CRServo.class, "bottomRightCRServo");
+        //DcMotor intake = hardwareMap.dcMotor.get("intake";)
 
-        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-         // launcherBeltMotor direction is unknown, update when known
-        //launcherBeltMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        //intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-         //launcherBeltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
        
        String whatServo = "both";
        
@@ -58,14 +56,14 @@ public class MecanumTeleOp extends LinearOpMode {
             double v3 = r * Math.sin(robotAngle) + rightX;
             double v4 = r * Math.cos(robotAngle) - rightX;
             
-            //a is bottom, x is top Left Bumper is both
+            //y is top a is bottom left bumper is both
             //leftTrigger controls power for servo(s)
         
             double leftTrigger = gamepad2.left_trigger;
             double servoPowerDisplay = leftTrigger * 100;
             boolean leftBumper = gamepad2.left_bumper;
             
-            if(gamepad2.x){
+            if(gamepad2.y){
                 whatServo = "top";
             } else if(gamepad2.a){
                 whatServo = "bottom";
@@ -75,18 +73,23 @@ public class MecanumTeleOp extends LinearOpMode {
             
             if (leftTrigger != 0) {
                 if(whatServo == "top"){
-                    topCRServo.setPower(leftTrigger);
+                    topLeftCRServo.setPower(leftTrigger);
+                    topRightCRServo.setPower(leftTrigger);
                 } else if(whatServo == "bottom"){
-                    bottomCRServo.setPower(leftTrigger);
+                    bottomLeftCRServo.setPower(leftTrigger);
+                    bottomRightCRServo.setPower(leftTrigger);
                 } else if(whatServo == "both"){
-                    topCRServo.setPower(leftTrigger);
-                    bottomCRServo.setPower(leftTrigger);
+                    topLeftCRServo.setPower(leftTrigger);
+                    bottomLeftCRServo.setPower(leftTrigger);
+                    topRightCRServo.setPower(leftTrigger);
+                    bottomRightCRServo.setPower(leftTrigger);
                 }
             } else {
-                topCRServo.setPower(0);
-                bottomCRServo.setPower(0);
+                topLeftCRServo.setPower(0);
+                bottomLeftCRServo.setPower(0);
+                topRightCRServo.setPower(0);
+                bottomRightCRServo.setPower(0);
             }
-            
             
             
             //the rightLauncher needs to be negitave to go forward.
