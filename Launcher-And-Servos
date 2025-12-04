@@ -74,16 +74,16 @@ public class MecanumTeleOp extends LinearOpMode {
             
             if (leftTrigger != 0) {
                 if(whatServo == "top"){
-                    topLeftCRServo.setPower(leftTriggerLeft);
-                    topRightCRServo.setPower(leftTrigger);
+                    topLeftCRServo.setPower(leftTrigger);
+                    topRightCRServo.setPower(leftTriggerLeft);
                 } else if(whatServo == "bottom"){
-                    bottomLeftCRServo.setPower(leftTriggerLeft);
-                    bottomRightCRServo.setPower(leftTrigger);
+                    bottomLeftCRServo.setPower(leftTrigger);
+                    bottomRightCRServo.setPower(leftTriggerLeft);
                 } else if(whatServo == "both"){
-                    topLeftCRServo.setPower(leftTriggerLeft);
-                    bottomLeftCRServo.setPower(leftTriggerLeft);
-                    topRightCRServo.setPower(leftTrigger);
-                    bottomRightCRServo.setPower(leftTrigger);
+                    topLeftCRServo.setPower(leftTrigger);
+                    bottomLeftCRServo.setPower(leftTrigger);
+                    topRightCRServo.setPower(leftTriggerLeft);
+                    bottomRightCRServo.setPower(leftTriggerLeft);
                 }
             } else {
                 topLeftCRServo.setPower(0);
