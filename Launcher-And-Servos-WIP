@@ -24,19 +24,19 @@ public class MecanumTeleOp extends LinearOpMode {
         CRServo bottomLeftCRServo = hardwareMap.get(CRServo.class, "bottomLeftCRServo");
         CRServo topRightCRServo = hardwareMap.get(CRServo.class, "topRightCRServo");
         CRServo bottomRightCRServo = hardwareMap.get(CRServo.class, "bottomRightCRServo");
-        //DcMotor intake = hardwareMap.dcMotor.get("intake";)
+        DcMotor intake = hardwareMap.dcMotor.get("intake");
 
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        //intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
        
        String whatServo = "both";
        
@@ -118,13 +118,18 @@ public class MecanumTeleOp extends LinearOpMode {
                 rightLauncher.setPower(0);
                 findLauncherSpd = 0;
             }
+            
+            double intakePower = gamepad2.left_stick_y * -1;
+            
+            if(intakePower > 0){
+                intake.setPower(intakePower);
+            }else{
+                intake.setPower(0);
+            }
 
             
             double powerMultiplier = 1;
             
-             /* if (triggerPress != 0) {
-                laucherBeltMotor.setPower(triggerPress);
-            } */
             
             
             if(rightX > 0)
@@ -160,6 +165,7 @@ public class MecanumTeleOp extends LinearOpMode {
             telemetry.addData("Launcher Speed", findLauncherSpd * 100);
             telemetry.addData("What Servo = ",whatServo);
             telemetry.addData("Servo pwr: ",servoPowerDisplay);
+            telemetry.addData("intake: ",intakePower * 100);
             telemetry.update();
         }
     }
